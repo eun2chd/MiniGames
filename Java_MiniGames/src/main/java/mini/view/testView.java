@@ -1,4 +1,4 @@
-package mini;
+package mini.view;
 
 import javax.swing.JFrame;
 

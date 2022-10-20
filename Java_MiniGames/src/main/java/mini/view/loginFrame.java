@@ -1,5 +1,8 @@
-package mini;
+package mini.view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,15 +26,17 @@ public class loginFrame extends JFrame {
 	 * */
 	userInfo user;
 	
-	private MainProcess main;
 	private testView testView;
-	
+	private JoinView joinView;
 	
 	// 로그인/초기화/회원가입 버튼
 	private JButton loginButton;
 	private JButton resetButton;
 	private JButton joinButton;
+	private JButton idfindButton;
+	private JButton pwFindButton;
 	
+
 	// 사용자 아이디 패스워드 입력
 	private JTextField userText;
 	private JPasswordField passText;
@@ -54,21 +59,21 @@ public class loginFrame extends JFrame {
 	private void initData() {
 		
 		setTitle("로그인 및 회원가입");
-		setSize(335,190);
+		setSize(455,190);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
 		loginButton = new JButton("로그인");
 		resetButton = new JButton("초기화");
 		joinButton = new JButton("회원가입");
+		idfindButton = new JButton("아이디 찾기");
+		pwFindButton = new JButton("패스워드 찾기");
 		
 		// 로그인 패널
 		jPanel = new JPanel();
 		placeLoginPanel(jPanel);
 		
 		add(jPanel);
-		
-
 		
 	}
 	
@@ -94,6 +99,14 @@ public class loginFrame extends JFrame {
 		passJLabel.setBounds(10,40,80,25);
 		panel.add(passJLabel);
 		
+		// 회원탈퇴 안내 문구
+		JLabel Withdrawal = new JLabel("회원탈퇴시 관리자에게 문의바랍니다.");
+		Withdrawal.setBounds(110, 130, 215, 25);
+		panel.add(Withdrawal);
+		
+
+		
+		
 		// panel 붙이기 (usertext)
 		userText = new JTextField(20);
 		userText.setBounds(100,10,160,25);
@@ -103,17 +116,27 @@ public class loginFrame extends JFrame {
 		passText = new JPasswordField(20);
 		passText.setBounds(100,40,160,25);
 		panel.add(passText);
-		passText.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				isLoginCheck();
-			}
-		});
+		
+		// id 찾기 버튼
+		idfindButton.setBounds(270, 10, 150, 25);
+		idfindButton.setBackground(new Color(13,93,191));
+		idfindButton.setForeground(new Color(255,255,255));
+		idfindButton.setFont(new Font("맑은 고딕",Font.BOLD,13));
+		panel.add(idfindButton);
+		
+		// pw 찾기 버튼
+		pwFindButton.setBounds(270, 40, 150, 25);
+		pwFindButton.setBackground(new Color(13,93,191));
+		pwFindButton.setForeground(new Color(255,255,255));
+		pwFindButton.setFont(new Font("맑은 고딕",Font.BOLD,12));
+		panel.add(pwFindButton);
+		
 		
 		// 로그인 버튼
-		loginButton.setBounds(10,85,100,25);
+		loginButton.setBounds(50,85,90,30);
+		loginButton.setBackground(new Color(13,93,191));
+		loginButton.setForeground(new Color(255,255,255));
+		loginButton.setFont(new Font("맑은 고딕",Font.BOLD,13));
 		panel.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			
@@ -129,20 +152,27 @@ public class loginFrame extends JFrame {
 		});
 		
 		// 회원가입 버튼
-		joinButton.setBounds(110, 85, 100, 25);
+		joinButton.setBounds(165, 85, 90, 30);
+		joinButton.setBackground(new Color(255,255,255));
+		joinButton.setForeground(new Color(0,0,0));
+		joinButton.setFont(new Font("맑은 고딕",Font.BOLD,13));
 		panel.add(joinButton);
 		joinButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				// 회원가입 메소드
-				main.showJoinView();
+				// 회원가입 창 오픈
+				setVisible(false);
+				joinView = new JoinView();
+				
 			}
 		});
 		
 		// 초기화 버튼
-		resetButton.setBounds(210,85,100,25);
+		resetButton.setBounds(275,85,90,30);
+		resetButton.setBackground(new Color(255,255,255));
+		resetButton.setForeground(new Color(0,0,0));
+		resetButton.setFont(new Font("맑은 고딕",Font.BOLD,13));
 		panel.add(resetButton);
 		resetButton.addActionListener(new ActionListener() {
 			
@@ -181,7 +211,8 @@ public class loginFrame extends JFrame {
 		
 		if (loginResult == 1) {
 			JOptionPane.showMessageDialog(null, "Success");
-			main.showTestView();
+			setVisible(false);
+			testView = new testView();
 		} else if(loginResult == 0) {
 			JOptionPane.showMessageDialog(null, "Password Inconsistency");
 		} else if(loginResult == -1) {
@@ -195,9 +226,7 @@ public class loginFrame extends JFrame {
 		return bloginCehck;
 	}
 	
-	public void setMain(MainProcess main) {
-		this.main = main;
-	}
+
 
 	public static void main(String[] args) {
 		
