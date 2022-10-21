@@ -33,7 +33,7 @@ public class JoinView extends JFrame{
 	private JButton joinButton;
 	// 패스워드 체크 버튼
 	private JButton passCheckButton;
-	// 초기화 버큰
+	// 초기화 버튼
 	private JButton resetButton;
 	
 	private JTextField userTextName;
@@ -42,10 +42,6 @@ public class JoinView extends JFrame{
 	private JPasswordField userPasscheck;
 	private JTextField userIdTextkey;
 
-
-	
-	
-	
 	public JoinView() {
 		
 		initData();

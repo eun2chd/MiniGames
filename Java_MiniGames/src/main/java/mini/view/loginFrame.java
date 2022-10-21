@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import mini.sql.DBcon;
+import mini.view.find.UseridFind;
+import mini.view.find.userPwFind;
 import mini.vo.userInfo;
 
 public class loginFrame extends JFrame {
@@ -124,12 +126,36 @@ public class loginFrame extends JFrame {
 		idfindButton.setFont(new Font("맑은 고딕",Font.BOLD,13));
 		panel.add(idfindButton);
 		
+		
+		idfindButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				setVisible(false);
+				UseridFind idfind = new UseridFind();
+			
+			}
+		});
+		
+		
+		
 		// pw 찾기 버튼
 		pwFindButton.setBounds(270, 40, 150, 25);
 		pwFindButton.setBackground(new Color(13,93,191));
 		pwFindButton.setForeground(new Color(255,255,255));
 		pwFindButton.setFont(new Font("맑은 고딕",Font.BOLD,12));
 		panel.add(pwFindButton);
+		
+		pwFindButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				setVisible(false);
+				userPwFind userpwfind = new userPwFind();
+			}
+		});
 		
 		
 		// 로그인 버튼

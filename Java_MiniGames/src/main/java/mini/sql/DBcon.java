@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import mini.Encrypte;
+import mini.vo.joinUserinfo;
 
 public class DBcon {
 	
@@ -147,6 +148,101 @@ public class DBcon {
 		return -2;
 	}
 	
+	
+	public String userFindId(String  Idkey) {
+		
+		String  useridFindSql = String.format("SELECT USERID  FROM minigames WHERE USERIDCHECK  = '%s';", Idkey);
+		
+		try {
+			
+			pstmt = conn.prepareStatement(useridFindSql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String userid = rs.getString(1);
+				if(userid != null) {
+					return  userid;
+				} else {
+					return null;
+				}
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	public int useridKeyCheck(String key, String id) {
+		
+		String userIdCheck = String.format("select count(*)  from minigames m where USERIDCHECK = '%s' and USERID = '%s';", key,id);
+		
+		try {
+			pstmt = conn.prepareStatement(userIdCheck);
+		    rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if (rs.getInt(1) == 1) {
+					return 1; // 해당 아이디와 키값이 존재함 
+				} else {
+					return 0;
+				}
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -2;	
+	}
+	
+	// 패스워드 변경 (잃어버렸을때)
+	public int userPasswordUpdate(String pass, String userid) {
+		
+		joinUserinfo joininfo = new joinUserinfo();
+		int u = 0;
+		
+		
+		enc = new Encrypte();
+		// 소금 새로 셋팅하고 
+		String salt = enc.getSalt();
+		// 패스워드 암호화 해서
+		pass = enc.getEncrypte(pass, salt);
+		// update
+		String userPwUpdateSql = "update minigames set SALT = ?, PASSWORD  = ? where USERID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(userPwUpdateSql);
+			pstmt.setString(1, salt);
+			pstmt.setString(2, pass);
+			pstmt.setString(3, userid);
+			
+		    u =  pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("sql문 오류 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+			}
+			if (conn !=  null) {
+				try {
+					conn.close();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+			}
+			
+		}
+	
+		return u;
+	}
 	
 	
 	// 회원가입 insert
