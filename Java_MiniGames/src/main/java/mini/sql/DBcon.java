@@ -6,8 +6,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import mini.Encrypte;
+import mini.vo.SadariResult;
 import mini.vo.joinUserinfo;
 
 public class DBcon {
@@ -148,7 +150,7 @@ public class DBcon {
 		return -2;
 	}
 	
-	
+	// idkey 중복 체크
 	public String userFindId(String  Idkey) {
 		
 		String  useridFindSql = String.format("SELECT USERID  FROM minigames WHERE USERIDCHECK  = '%s';", Idkey);
@@ -175,6 +177,7 @@ public class DBcon {
 		
 	}
 	
+	// key id 조회후 해당  사용자가 있는지 체크
 	public int useridKeyCheck(String key, String id) {
 		
 		String userIdCheck = String.format("select count(*)  from minigames m where USERIDCHECK = '%s' and USERID = '%s';", key,id);
@@ -244,6 +247,36 @@ public class DBcon {
 		return u;
 	}
 	
+	public void loginUserInfo(String userid) {
+		
+		String userSelectsql = "select * from minigames where userid = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(userSelectsql);
+			pstmt.setString(1, userid);
+			
+			rs = pstmt.executeQuery();
+			
+			int useruid = 0;
+			String username = "";
+			String userId = "";
+			
+			while(rs.next()) {
+				
+				useruid = rs.getInt(1);
+				username = rs.getString(2);
+				userId = rs.getString(3);				
+			}
+			
+			System.out.println("사용자 uid : " + useruid);
+			System.out.println("사용자 이름 : " + username);
+			System.out.println("사용자 id : " + userId);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// 회원가입 insert
 	public int userInsert(String userName,String userId,String userPass,String userIdcheck) {
@@ -298,6 +331,38 @@ public class DBcon {
 	
 		return r;
 	}
+	
+	// 사다리 결과물 가져오기 arrayList
+	public ArrayList<SadariResult> Sadari() {
+		
+		String resultsql = "select ROUND ,lr,line,oe from sadariresult";
+		ArrayList<SadariResult> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(resultsql);
+			rs = pstmt.executeQuery();
+			
+			
+			
+			while(rs.next()) {
+				
+				SadariResult sa = new SadariResult();
+				sa.setRound(rs.getInt(1));
+				sa.setLR(rs.getString(2));
+				sa.setLine(rs.getString(3));
+				sa.setOven(rs.getString(4));
+	
+				list.add(sa);
+			}
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("db 오류");
+		}
+		return list;
+	}
+	
 	
 	
 	public static void main(String[] args) {

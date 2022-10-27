@@ -26,7 +26,7 @@ public class loginFrame extends JFrame {
 	 * userInfo
 	 * 
 	 * */
-	userInfo user;
+	userInfo user = new userInfo();
 	
 	private testView testView;
 	private JoinView joinView;
@@ -221,11 +221,12 @@ public class loginFrame extends JFrame {
 		DBcon con = new DBcon();
 		con.DBcon();
 		
-		user = new userInfo();
 		
 		// setter 값 전달 
 		user.setUserid(userText.getText());
 		user.setPassword(passText.getText());
+		
+		String userId = user.getUserid();
 		
 		/*
 		 * 사용자가 입력한 값으로 sql 쿼리 질의 
@@ -237,8 +238,10 @@ public class loginFrame extends JFrame {
 		
 		if (loginResult == 1) {
 			JOptionPane.showMessageDialog(null, "Success");
-			setVisible(false);
-			testView = new testView();
+			user.setUserid(userText.getText());
+			System.out.println("로그인 프레임" + user.getUserid());
+			dispose();
+			testView = new testView(userId);
 		} else if(loginResult == 0) {
 			JOptionPane.showMessageDialog(null, "Password Inconsistency");
 		} else if(loginResult == -1) {
