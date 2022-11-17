@@ -68,7 +68,6 @@ public class sadariGamePlay extends Thread{
 
 	@Override
 	public void run() {
-		System.out.println(countTime);
 		while(true) {
 			reset();
 			while(!isOver) {
@@ -76,9 +75,8 @@ public class sadariGamePlay extends Thread{
 				
 				if(System.currentTimeMillis() - pretime < delay) {
 					try {
-						Thread.sleep(500);
+						Thread.sleep(1000);
 						Timeset();
-						System.out.println(countTime);
 						cnt++;;
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -99,7 +97,7 @@ public class sadariGamePlay extends Thread{
 	
 	public void reset() {
 		
-		countTime = 4;
+		countTime = 100;
 		isOver = false;
 		// 다시 사다리 화면 가려주기
 		sa.setLine(0);
@@ -151,7 +149,7 @@ public class sadariGamePlay extends Thread{
 		g.drawLine(420, 50, 420,350);
 		g.drawImage(Xicon_img, 155, 25, null);
 		g.drawImage(Xicon_img, 395, 25, null);
-		if(sa.getLine() == 1) {
+		if(sa.getLR() == 1) {
 			sadariLeft(g);
 		}else {
 			sadariRight(g);
@@ -172,27 +170,40 @@ public class sadariGamePlay extends Thread{
 		g.drawLine(420, 50, 420,350);
 		g.drawImage(Xicon_img, 155, 25, null);
 		g.drawImage(Xicon_img, 395, 25, null);
-		if(sa.getLine() == 1) {
-			sadariLeft(g);
+		if(sa.getLR() == 1) {
+			foursadariLeft(g);
 		}else {
-			sadariRight(g);
+			fourRsadariRight(g);
 		}
 	}
-	
+	// 홀짝 이미지 그리기 
 	public void sadariCh(Graphics g) {
 
 		g.drawImage(even_img, 368, 310,100,100, null);
 		g.drawImage(odd_img,135,310,95,95, null);
 	}
-	
+	// 3줄 왼쪽 출발시 화살표 양 그리기
 	public void sadariLeft(Graphics g) {
 		g.drawImage(bottom_ch,155,25,null );
 		g.drawImage(sheep_ch,saWay.leftX,saWay.leftY, null);
 		
 	}
+	// 3줄 오른쪽 출발시 화살표 양 그리기
 	public void sadariRight(Graphics g) {
 		g.drawImage(bottom_ch,395,25,null );
-		g.drawImage(sheep_ch,395,35, null);
+		g.drawImage(sheep_ch,saWay.rightX,saWay.rightY, null);
+	}
+	
+	// 4줄 왼쪽 출발시 화살표 양 그리기
+	public void foursadariLeft(Graphics g) {
+		g.drawImage(bottom_ch,155,25,null );
+		g.drawImage(sheep_ch,saWay.foursheePleftX,saWay.foursheePleftY, null);
+		
+	}
+	// 4줄 오른쪽 출발시 화살표 양 그리기
+	public void fourRsadariRight(Graphics g) {
+		g.drawImage(bottom_ch,395,25,null );
+		g.drawImage(sheep_ch,saWay.fourrsheePleftX,saWay.fourrsheePleftY, null);
 	}
 	
 	
@@ -202,12 +213,30 @@ public class sadariGamePlay extends Thread{
 		countTime--;
 		if(countTime == 0) {
 			isOver = true;
-			sa.setLine(1);
-			sa.setLR(1);
-			saWay.LeftLineWayflag = true;
-			saWay.leftLineWay();
+			sa.setLine(sa.lineRandom());
+			sa.setLR(sa.LrRandom());
+			
+		if(sa.getLine() == 1) {
+			if(sa.getLR() == 1) {
+				saWay.LineWayflag = true;
+				saWay.leftLineWay();
+			} else {
+				saWay.LineWayflag = true;
+				saWay.rightLineWay();
+			}
+		}else {
+			if(sa.getLR() == 1) {
+				saWay.LineWayflag = true;
+				saWay.fourLeftWay();
+			} else {
+				saWay.LineWayflag = true;
+				saWay.fourRightWay();
+			}
 		}
+		
+		
 	}
+}
 	
 	
 

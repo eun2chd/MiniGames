@@ -2,10 +2,20 @@ package mini.view.sadariGameView;
 
 public class sadariRand {
 	
-	// 3줄 양 위치
+	// 3줄 좌출발 양 위치
 	int sheePleftX = 155;
 	int sheePleftY = 35;
 	
+	// 3줄 우출발 양위치
+	int rsheePleftX = 395;
+	int rsheePleftY = 35;
+	
+	//4줄 왼쪽 출발
+	int foursheePleftX = 155;
+	int foursheePleftY = 35;
+	//4줄 오른쪽 출발
+	int fourrsheePleftX = 395;
+	int fourrsheePleftY = 35;
 	
 	// 홀짝 랜덤
 	private int oddeven = 0;
@@ -81,5 +91,53 @@ public class sadariRand {
 		this.sheePleftY = sheePleftY;
 	}
 
+	public int getRsheePleftX() {
+		return rsheePleftX;
+	}
+
+	public void setRsheePleftX(int rsheePleftX) {
+		this.rsheePleftX = rsheePleftX;
+	}
+
+	public int getRsheePleftY() {
+		return rsheePleftY;
+	}
+
+	public void setRsheePleftY(int rsheePleftY) {
+		this.rsheePleftY = rsheePleftY;
+	}
+
+	public int getFoursheePleftX() {
+		return foursheePleftX;
+	}
+
+	public void setFoursheePleftX(int foursheePleftX) {
+		this.foursheePleftX = foursheePleftX;
+	}
+
+	public int getFoursheePleftY() {
+		return foursheePleftY;
+	}
+
+	public void setFoursheePleftY(int foursheePleftY) {
+		this.foursheePleftY = foursheePleftY;
+	}
+
+	public int getFourrsheePleftX() {
+		return fourrsheePleftX;
+	}
+
+	public void setFourrsheePleftX(int fourrsheePleftX) {
+		this.fourrsheePleftX = fourrsheePleftX;
+	}
+
+	public int getFourrsheePleftY() {
+		return fourrsheePleftY;
+	}
+
+	public void setFourrsheePleftY(int fourrsheePleftY) {
+		this.fourrsheePleftY = fourrsheePleftY;
+	}
+	
 	
 }
