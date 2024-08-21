@@ -140,7 +140,7 @@ public class sadariGame extends JFrame{
 	public void placeSadariResult(JScrollPane panel) {
 		
 		panel.setLayout(borderLayout);
-		panel.setSize(200,400);
+		panel.setSize(300,500);
 		sadariResultArea = new JTextArea(10,7);
 		sadariResultArea.setFont(new Font("맑은 고딕",Font.BOLD,17));
 		sadariResultArea.setLineWrap(true);

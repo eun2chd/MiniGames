@@ -358,7 +358,7 @@ public class DBcon {
 			
 			
 		} catch (Exception e) {
-			System.out.println("db 오류");
+			System.out.println("결과 불러오기 db 오류");
 		}
 		return list;
 	}

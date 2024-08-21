@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import mini.sql.DBcon;
 import mini.view.find.UseridFind;
 import mini.view.find.userPwFind;
+import mini.view.sadariGameView.sadariGame;
 import mini.vo.userInfo;
 
 public class loginFrame extends JFrame {
@@ -241,7 +242,8 @@ public class loginFrame extends JFrame {
 			user.setUserid(userText.getText());
 			System.out.println("로그인 프레임" + user.getUserid());
 			dispose();
-			testView = new testView(userId);
+			sadariGame sadariGame = new sadariGame();
+//			testView = new testView(userId);
 		} else if(loginResult == 0) {
 			JOptionPane.showMessageDialog(null, "Password Inconsistency");
 		} else if(loginResult == -1) {
